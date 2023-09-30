@@ -9,6 +9,6 @@ format:
 	black *.py 
 
 lint:
-	ruff check library/*.py test_*.py
+	ruff check library/*.py test_*.py *.py
 	
 all: install lint test format
