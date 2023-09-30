@@ -57,13 +57,13 @@ def test_create_CRUD():
     # Connect to the database and check if the data was inserted
     conn = sqlite3.connect("titanic_passengersDB")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM titanic WHERE id = 893")
+    cursor.execute("SELECT * FROM titanic WHERE PassengerId = 893")
     result = cursor.fetchone()
 
     assert result == data
 
     # Clean up by deleting the inserted data
-    cursor.execute("DELETE FROM titanic WHERE id = 893")
+    cursor.execute("DELETE FROM titanic WHERE PassengerId = 893")
     conn.commit()
     conn.close()
 
@@ -90,14 +90,14 @@ def test_update_CRUD():
     # Connect to the database and check if the data was updated
     conn = sqlite3.connect("titanic_passengersDB")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT {column_name} FROM titanic WHERE id = ?", (record_id,))
+    cursor.execute(f"SELECT {column_name} FROM titanic WHERE PassengerId = ?", (record_id,))
     result = cursor.fetchone()[0]
 
     # Check if the updated value matches the new value
     assert result == new_value
 
     # Clean up by deleting the inserted data
-    cursor.execute("DELETE FROM titanic WHERE id = 893")
+    cursor.execute("DELETE FROM titanic WHERE PassengerId = 893")
     conn.commit()
     conn.close()
 
@@ -113,7 +113,7 @@ def test_delete_CRUD():
     # Connect to the database and check if the record was deleted
     conn = sqlite3.connect("titanic_passengersDB")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM titanic WHERE id = ?", (record_id,))
+    cursor.execute("SELECT * FROM titanic WHERE PassengerId = ?", (record_id,))
     result = cursor.fetchone()
 
     # Check if the result is None, indicating the record was deleted
