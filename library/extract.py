@@ -2,7 +2,7 @@
 import requests
 import os
 
-def extract(url="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv", file_path="Data/titanic.csv", save_folder="Data"):
+def extract_file(url="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv", file_path="Data/titanic.csv", save_folder="Data"):
     # Make a directory if it doesn't exist
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)

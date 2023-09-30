@@ -1,5 +1,5 @@
 # Test main.py
-from extract import extract
+from extract import extract_file
 from transform import load_file
 from query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD, capture_screenshot
 
@@ -7,14 +7,20 @@ import sqlite3
 import os
 
 
-def test_extract():
-    # Clean up by removing the downloaded file
-    file_path = "Data/titanic.csv"
-    if os.path.exists(file_path):
-        os.remove(file_path)
-    assert os.path.exists("Data/titanic.db")
+def test_extract_file():
+    # 테스트 데이터를 다운로드할 임시 경로 설정
+    temp_file_path = "Data/test_titanic.csv"
 
-def test_transform():
+    # extract_file 함수를 호출하여 파일 다운로드
+    result = extract_file(url="https://github.com/datasciencedojo/datasets/raw/master/titanic.csv", file_path=temp_file_path, save_folder="Data")
+
+    # 파일이 성공적으로 다운로드되었는지 확인
+    assert os.path.exists(result)
+
+    # 다운로드한 파일 삭제 (테스트 이후 정리)
+    os.remove(result)
+
+def test_load_file():
     # Define the path to the test CSV file
     dataset = "Data/titanic.csv"
 
@@ -115,6 +121,8 @@ def test_capture_screenshot():
     os.remove(file_path)
 
 if __name__ == "__main__":
+    test_extract_file()
+    test_load_file()
     test_create_CRUD()
     test_read_CRUD()
     test_update_CRUD()

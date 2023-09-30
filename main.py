@@ -1,6 +1,5 @@
 # ETL-Query script
-import sqlite3
-from library.extract import extract
+from library.extract import extract_file
 from library.transform import load_file
 from library.query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD, capture_screenshot
 
@@ -8,7 +7,7 @@ database_path = "mydatabase.db"  # 데이터베이스 파일 경로
 table_name = "mytable"
 
 # Extract .csv file
-extract(url="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv",
+extract_file(url="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv",
         file_path="Data/titanic.csv", save_folder="Data")
 
 # Transform .csv file to .db file
