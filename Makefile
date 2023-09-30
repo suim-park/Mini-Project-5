@@ -10,7 +10,5 @@ format:
 
 lint:
 	ruff check library/*.py test_*.py
-
-
-		
+	
 all: install lint test format

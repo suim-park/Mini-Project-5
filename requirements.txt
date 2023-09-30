@@ -9,5 +9,5 @@ requests==2.26.0
 ruff==0.0.284
 pylint==2.15.3
 
-#SQLite
-requests==2.31.0
+#screenshot
+pillow==10.0.1
