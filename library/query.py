@@ -8,6 +8,8 @@ def create_CRUD(data):
     conn = sqlite3.connect(dataset)
     cursor = conn.cursor()
 
+    cursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} (PassengerId, Survived, Pclass, Name, Sex, Age, SibSp, Parch, Ticket, Fare, Cabin, Embarked)")
+
     query = f"INSERT INTO {table_name} VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     cursor.execute(query, data)
 
@@ -29,15 +31,15 @@ def read_CRUD():
 
     return result
 
-def update_CRUD(record_id, column_name, new_value):
+def update_CRUD(record_id, column_name, data):
     dataset = "titanic_passengersDB"
     table_name = "titanic"
 
     conn = sqlite3.connect(dataset)
     cursor = conn.cursor()
 
-    query = f"UPDATE {table_name} SET {column_name} = ? WHERE id = ?"  # 예시 쿼리
-    cursor.execute(query, (new_value, record_id))
+    query = f"UPDATE {table_name} SET Survived=?, Pclass=?, Name=?, Sex=?, Age=?, SibSp=?, Parch=?, Ticket=?, Fare=?, Cabin=?, Embarked=? WHERE PassengerId=?"
+    cursor.execute(query, (data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[0]))
     
     conn.commit()
 
@@ -53,7 +55,7 @@ def delete_CRUD(record_id):
     conn = sqlite3.connect(dataset)
     cursor = conn.cursor()
 
-    query = f"DELETE FROM {table_name} WHERE id = ?"  # 예시 쿼리
+    query = f"DELETE FROM {table_name} WHERE PassengerId = ?"  # 예시 쿼리
     cursor.execute(query, (record_id,))
 
     conn.commit()
