@@ -80,18 +80,18 @@ def test_read_CRUD():
 
 def test_update_CRUD():
     # Insert test data
-    test_data = (893, 1, 3, "Jane, Miss. Smith", "female", 30, 0, 0, "54321", 8.0, "", "C")
+    test_data = (892, 1, 1, "Rose, Miss. DeWitt Bukater", "female", 19, 0, 1, 12, 100, 2, "Q")
     create_CRUD(test_data)
 
     # Call the update_CRUD function to update a specific column
-    record_id = 893
+    record_id = 892
     column_name = "Age"
-    new_value = 35
+    new_value = 18
 
     update_CRUD(record_id, column_name, new_value)
     new_database = read_CRUD()
 
-    assert new_database == (893, 1, 3, "Jane, Miss. Smith", "female", 35, 0, 0, "54321", 8.0, "", "C")
+    assert new_database == (892, 1, 1, "Rose, Miss. DeWitt Bukater", "female", 18, 0, 1, 12, 100, 2, "Q")
 
 def test_delete_CRUD():
     # Insert test data
