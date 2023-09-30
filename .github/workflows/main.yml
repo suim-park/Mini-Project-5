@@ -6,12 +6,20 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10.x, 3.11]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v3
+
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -21,7 +29,7 @@ on:
       - name: Run tests
         run: make test
 
-      - name: Run file
+      - name: Run main file
         run: python main.py
 
       - name: Make lint
