@@ -5,6 +5,7 @@ from library.query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD, capt
 from PIL import ImageGrab
 
 import sqlite3
+import csv
 import os
 
 
@@ -22,25 +23,36 @@ def test_extract_file():
     os.remove(result)
 
 def test_load_file():
-    # Define the path to the test CSV file
-    dataset = "Data/titanic.csv"
-
-    # Remove the database file if it exists to start fresh
-    db_file = "titanic_passengersDB.db"
-    if os.path.exists(db_file):
-        os.remove(db_file)
-
-    # Call the load_file function to load data into a database
-    result = load_file(dataset)
-
-    # Check if the database file was created
-    assert os.path.exists(db_file)
-
-    # Check if the result is the name of the created database file
-    assert result == db_file
+    test_csv_file = "test.csv"
+    with open(test_csv_file, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([
+            "PassengerId", "Survived", "Pclass", "Name", "Sex",
+            "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"
+        ])
+        # 데이터 행
+        writer.writerow([
+            893, 0, 3, "Braund, Mr. Owen Harris", "male", 22, 1, 0, "A/5 21171", 7.25, "", "S"
+        ])
+    
+    # 테스트용 DB 파일 경로
+    test_db_file = "test_db.db"
+    
+    # CSV 파일을 DB로 로드
+    load_file(test_csv_file, test_db_file, "test_table")
+    
+    # DB에서 데이터 확인
+    conn = sqlite3.connect(test_db_file)
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM test_table")
+    count = cursor.fetchone()[0]
+    conn.close()
+    
+    # 예상된 데이터 행 수와 실제 데이터 행 수 비교
+    assert count == 1
 
 def test_create_CRUD():
-    data = (893, 1, 3, "John, Mr. Doe", "male", 25, 0, 0, "12345", 7.25, 35, "S")
+    data = (893, 1, 3, "John, Mr. Doe", "male", 25, 0, 0, "12345", 7.25, "", "S")
     create_CRUD(data)
 
     # Connect to the database and check if the data was inserted
@@ -67,7 +79,7 @@ def test_read_CRUD():
 
 def test_update_CRUD():
     # Insert test data
-    test_data = (893, 1, 3, "Jane, Miss. Smith", "female", 30, 0, 0, "54321", 8.0, 58, "C")
+    test_data = (893, 1, 3, "Jane, Miss. Smith", "female", 30, 0, 0, "54321", 8.0, "", "C")
     create_CRUD(test_data)
 
     # Call the update_CRUD function to update a specific column
@@ -92,7 +104,7 @@ def test_update_CRUD():
 
 def test_delete_CRUD():
     # Insert test data
-    test_data = (893, 1, 3, "Bob, Mr. Johnson", "male", 28, 0, 0, "67890", 9.0, 50, "S")
+    test_data = (893, 1, 3, "Bob, Mr. Johnson", "male", 28, 0, 0, "67890", 9.0, "", "S")
     create_CRUD(test_data)
 
     # Call the delete_CRUD function to delete a record
@@ -109,17 +121,17 @@ def test_delete_CRUD():
     assert result is None
 
 def test_capture_screenshot():
-    # Define a test file path for the screenshot
-    file_path = "test_screenshot.png"
+    capture_screenshot("test_screenshot.png")
+    assert os.path.exists("test_screenshot.png")
+    
+    # 캡처한 이미지 열어서 확인 (예: 이미지 크기 확인)
+    with Image.open("test_screenshot.png") as img:
+        width, height = img.size
+        assert width > 0
+        assert height > 0
 
-    # Call the capture_screenshot function to capture a screenshot
-    capture_screenshot(file_path)
-
-    # Check if the screenshot file exists
-    assert os.path.exists(file_path)
-
-    # Clean up by deleting the screenshot file
-    os.remove(file_path)
+    # 테스트 후에 파일 삭제 (옵션)
+    os.remove("test_screenshot.png")
 
 if __name__ == "__main__":
     test_extract_file()
