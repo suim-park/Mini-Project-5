@@ -8,3 +8,6 @@ requests==2.26.0
 #rust based linter
 ruff==0.0.284
 pylint==2.15.3
+
+#SQLite
+requests==2.31.0
