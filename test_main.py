@@ -87,28 +87,11 @@ def test_update_CRUD():
     record_id = 893
     column_name = "Age"
     new_value = 35
-    
-    # Connect to the database
-    conn = sqlite3.connect("titanic_passengersDB.db")  # 수정된 경로
-    cursor = conn.cursor()
-    
-    # Find the index of the column by name
-    cursor.execute(f"PRAGMA table_info(titanic)")
-    columns = cursor.fetchall()
-    column_names = [column[1] for column in columns]
-    column_index = column_names.index(column_name)
-    
-    # Update the specified column
+
     update_CRUD(record_id, column_name, new_value)
-    
-    # Check if the data was updated
-    cursor.execute(f"SELECT {column_name} FROM titanic WHERE PassengerId = ?", (record_id,))
-    result = cursor.fetchone()[column_index]
-    
-    conn.close()
-    
-    # Check if the updated value matches the new value
-    assert result == new_value
+    new_database = read_CRUD()
+
+    assert new_database == (893, 1, 3, "Jane, Miss. Smith", "female", 35, 0, 0, "54321", 8.0, "", "C")
 
 def test_delete_CRUD():
     # Insert test data
