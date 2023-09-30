@@ -9,4 +9,4 @@ requests==2.26.0
 ruff==0.0.284
 
 #screenshot
-Pillow
+pillow
