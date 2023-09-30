@@ -1,7 +1,7 @@
 # Test main.py
-from extract import extract_file
-from transform import load_file
-from query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD, capture_screenshot
+from library.extract import extract_file
+from library.transform import load_file
+from library.query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD, capture_screenshot
 
 import sqlite3
 import os
