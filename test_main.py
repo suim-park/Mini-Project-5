@@ -68,6 +68,8 @@ def test_create_CRUD():
     conn.close()
 
 def test_read_CRUD():
+    test_data = (1, 0, 3, "Braund, Mr. Owen Harris", "male", 22, 1, 0, "A/5 21171", 7.25, "", "S")
+    create_CRUD(test_data)
     result = read_CRUD()
 
     # Check if the result is a list (assuming it contains multiple rows)
@@ -85,6 +87,8 @@ def test_update_CRUD():
     record_id = 893
     column_name = "Age"
     new_value = 35
+
+    test_data = (893, 1, 3, "Jane, Miss. Smith", "female", 35, 0, 0, "54321", 8.0, "", "C")
     update_CRUD(record_id, column_name, new_value)
 
     # Connect to the database and check if the data was updated
@@ -92,14 +96,10 @@ def test_update_CRUD():
     cursor = conn.cursor()
     cursor.execute(f"SELECT {column_name} FROM titanic WHERE PassengerId = ?", (record_id,))
     result = cursor.fetchone()[0]
+    conn.close()
 
     # Check if the updated value matches the new value
     assert result == new_value
-
-    # Clean up by deleting the inserted data
-    cursor.execute("DELETE FROM titanic WHERE PassengerId = 893")
-    conn.commit()
-    conn.close()
 
 def test_delete_CRUD():
     # Insert test data
