@@ -2,7 +2,6 @@
 from library.extract import extract_file
 from library.transform import load_file
 from library.query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD, capture_screenshot
-from PIL import ImageGrab
 
 import sqlite3
 import csv
@@ -120,19 +119,6 @@ def test_delete_CRUD():
     # Check if the result is None, indicating the record was deleted
     assert result is None
 
-def test_capture_screenshot():
-    capture_screenshot("test_screenshot.png")
-    assert os.path.exists("test_screenshot.png")
-    
-    # 캡처한 이미지 열어서 확인 (예: 이미지 크기 확인)
-    with Image.open("test_screenshot.png") as img:
-        width, height = img.size
-        assert width > 0
-        assert height > 0
-
-    # 테스트 후에 파일 삭제 (옵션)
-    os.remove("test_screenshot.png")
-
 if __name__ == "__main__":
     test_extract_file()
     test_load_file()
@@ -140,4 +126,3 @@ if __name__ == "__main__":
     test_read_CRUD()
     test_update_CRUD()
     test_delete_CRUD()
-    test_capture_screenshot()

@@ -1,6 +1,5 @@
 # Query the database
 import sqlite3
-from PIL import ImageGrab
 
 def create_CRUD(data):
     dataset = "titanic_passengersDB"
@@ -63,8 +62,3 @@ def delete_CRUD(record_id):
     conn.close()
 
     print(f"Record with ID {record_id} has been deleted.")
-
-def capture_screenshot(file_path):
-    screenshot = ImageGrab.grab()  # 현재 화면을 캡처
-    screenshot.save(file_path)  # 스크린샷을 파일로 저장
-    print(f"Screenshot saved to {file_path}")
