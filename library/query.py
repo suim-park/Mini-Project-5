@@ -14,6 +14,7 @@ def create_CRUD(data):
     cursor.execute(query, data)
 
     conn.commit()
+    conn.close()
 
 def read_CRUD():
     dataset = "titanic_passengersDB"
@@ -37,6 +38,9 @@ def update_CRUD(record_id, column_name, new_value):
 
     conn = sqlite3.connect(dataset)
     cursor = conn.cursor()
+
+    # Create the table if it doesn't exist
+    cursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} (PassengerId INT, Survived INT, Pclass INT, Name TEXT, Sex TEXT, Age INT, SibSp INT, Parch INT, Ticket TEXT, Fare REAL, Cabin TEXT, Embarked TEXT)")
 
     # Create a dynamic SQL query to update the specified column for a record
     query = f"UPDATE {table_name} SET {column_name}=? WHERE PassengerId=?"
