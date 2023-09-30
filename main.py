@@ -5,7 +5,7 @@ from library.query import create_CRUD, read_CRUD, update_CRUD, delete_CRUD
 
 csv_file_path = "Data/titanic.csv"  # CSV 파일 경로
 db_file_path = "titanic_passengersDB.db"  # SQLite DB 파일 경로
-table_name = "titanic_passengers"  # 테이블 이름
+table_name = "titanic"  # 테이블 이름
 
 # Extract .csv file
 extract_file(url="https://github.com/datasciencedojo/datasets/blob/master/titanic.csv",
