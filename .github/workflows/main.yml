@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.9, 3.10.x, 3.11]
 
     steps:
       - name: Checkout code
@@ -19,9 +16,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v3
-
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.11.5'
 
       - name: Install dependencies
         run: make install
@@ -34,6 +30,6 @@ jobs:
 
       - name: Make lint
         run: make lint
-        
+
       - name: format
         run: make format
