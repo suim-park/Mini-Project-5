@@ -95,7 +95,7 @@ def test_update_CRUD():
     conn = sqlite3.connect("titanic_passengersDB")
     cursor = conn.cursor()
     cursor.execute(f"SELECT {column_name} FROM titanic WHERE PassengerId = ?", (record_id,))
-    result = cursor.fetchone()[0]
+    result = cursor.fetchone()[5]
     conn.close()
 
     # Check if the updated value matches the new value

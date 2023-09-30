@@ -25,6 +25,3 @@ update_CRUD(892, "Age", 18)
 
 # delete from CRUD
 delete_CRUD(892)
-
-# save the database operation as screenshot
-capture_screenshot("screenshot/operation.png")
