@@ -31,22 +31,19 @@ def read_CRUD():
 
     return result
 
-def update_CRUD(record_id, column_name, data):
-    dataset = "titanic_passengersDB"
+def update_CRUD(record_id, column_name, new_value):
+    dataset = "titanic_passengersDB.db"
     table_name = "titanic"
 
     conn = sqlite3.connect(dataset)
     cursor = conn.cursor()
 
-    query = f"UPDATE {table_name} SET Survived=?, Pclass=?, Name=?, Sex=?, Age=?, SibSp=?, Parch=?, Ticket=?, Fare=?, Cabin=?, Embarked=? WHERE PassengerId=?"
-    cursor.execute(query, (data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[0]))
-    
+    # Create a dynamic SQL query to update the specified column for a record
+    query = f"UPDATE {table_name} SET {column_name}=? WHERE PassengerId=?"
+    cursor.execute(query, (new_value, record_id))
+
     conn.commit()
-
-    cursor.close()
     conn.close()
-
-    print(f"Column '{column_name}' of ID {record_id} has been updated.")
 
 def delete_CRUD(record_id):
     dataset = "titanic_passengersDB"
